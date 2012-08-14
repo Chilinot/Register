@@ -1,0 +1,9 @@
+name: Register
+main: me.lucasemanuel.register.Main
+version: 1.4
+
+commands:
+  reg:
+    description: Used to register to the forum.
+    usage: /<command> <e-post> <losenord>
+    permission: register.register
