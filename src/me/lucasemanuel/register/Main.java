@@ -218,7 +218,7 @@ class CmdExec implements CommandExecutor {
 			return null;
 		}
 		
-		return null;
+		return answer;
 	}
 	
 	private boolean checkComplexity(String password) {
