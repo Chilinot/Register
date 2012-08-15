@@ -173,7 +173,7 @@ class CmdExec implements CommandExecutor {
 			switch(answer) {
 				
 				case "0":
-					sender.sendMessage(ChatColor.GREEN + "Rankändring genomförd!");
+					sender.sendMessage(ChatColor.GREEN + playername + " har nu rank " + rank);
 					break;
 				
 				case "1":
@@ -181,11 +181,11 @@ class CmdExec implements CommandExecutor {
 					break;
 					
 				case "2":
-					sender.sendMessage(ChatColor.RED + "Spelarnamnet finns inte!");
+					sender.sendMessage(ChatColor.RED + playername + " finns inte!");
 					break;
 					
 				default:
-					sender.sendMessage(ChatColor.RED + "Ooops något verkar ha gått snett! Kolla loggen!");
+					sender.sendMessage(ChatColor.RED + "Ooops något verkar ha gått snett! Skyll på Lucas!");
 			}
 		}
 		else {
