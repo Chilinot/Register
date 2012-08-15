@@ -11,8 +11,10 @@ public class Config {
 	 *       Settings in config         *
 	 * -------------------------------- */
 	public static boolean debug = false;
-	public static String APIkey = "";
-	public static String script = "";
+	public static String APIkeys_register = "";
+	public static String APIkeys_promote = "";
+	public static String scripts_register = "";
+	public static String scripts_promote = "";
 
 	/* -------------------------------- *
 	 *          Do not touch!           *

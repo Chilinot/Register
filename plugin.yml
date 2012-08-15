@@ -7,3 +7,11 @@ commands:
     description: Used to register to the forum.
     usage: /<command> <e-post> <losenord>
     permission: register.register
+  promote:
+    description: Promotes a user
+    usage: /<command> <playername>
+    permission: register.promote
+  demote:
+    description: Demotes a user
+    usage: /<command> <playername>
+    permission: register.demote
