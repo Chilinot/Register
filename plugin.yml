@@ -9,9 +9,9 @@ commands:
     permission: register.register
   promote:
     description: Promotes a user
-    usage: /<command> <playername>
+    usage: /<command> <spelarnamn> <rank>
     permission: register.promote
   demote:
     description: Demotes a user
-    usage: /<command> <playername>
+    usage: /<command> <spelarnamn> <rank>
     permission: register.demote
