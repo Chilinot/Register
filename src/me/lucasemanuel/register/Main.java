@@ -118,7 +118,7 @@ class CmdExec implements CommandExecutor {
 				switch(answer) {
 					
 					case "0":
-						sender.sendMessage(ChatColor.GREEN + "Du har registrerats på forumet!");
+						sender.sendMessage(ChatColor.GREEN + "Grattis " + name + "! Du har registrerats på forumet med ranken " + ChatColor.LIGHT_PURPLE + "Lärling");
 						((Player)sender).chat("/sync");
 						break;
 						
