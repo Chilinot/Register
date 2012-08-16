@@ -57,8 +57,8 @@ public class Main extends JavaPlugin {
 		CmdExec executore = new CmdExec(this);
 		
 		this.getCommand("reg").setExecutor(executore);
-		this.getCommand("promote").setExecutor(executore);
-		this.getCommand("demote").setExecutor(executore);
+		this.getCommand("mpromote").setExecutor(executore);
+		this.getCommand("mdemote").setExecutor(executore);
 		
 		
 		// Finished
@@ -89,7 +89,7 @@ class CmdExec implements CommandExecutor {
 		
 		if(cmd.getName().toLowerCase().equals("reg")) {
 			
-			if(args.length != 2 && args[0] == "" && args[1] == "") {
+			if(args.length != 2) {
 				sender.sendMessage(ChatColor.RED + "Felaktig användning!");
 				return false;
 			}
@@ -156,10 +156,13 @@ class CmdExec implements CommandExecutor {
 	
 	private boolean promoteDemote(CommandSender sender, String[] args) {
 		
-		if(args.length != 2) return false;
+		if(args.length != 2) {
+			sender.sendMessage(ChatColor.RED + "Felaktig användning!");
+			return false;
+		}
 		
 		if(!this.idlist.containsKey(args[1])) {
-			sender.sendMessage(ChatColor.RED + "Den ranken existerar inte!");
+			sender.sendMessage(ChatColor.RED + args[1] + " ranken existerar inte!");
 			return true;
 		}
 		
@@ -173,7 +176,7 @@ class CmdExec implements CommandExecutor {
 			switch(answer) {
 				
 				case "0":
-					sender.sendMessage(ChatColor.GREEN + playername + " har nu rank " + rank);
+					sender.sendMessage(ChatColor.GREEN + playername + " har nu rank " + args[1]);
 					break;
 				
 				case "1":
