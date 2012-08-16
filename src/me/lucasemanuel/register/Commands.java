@@ -63,7 +63,7 @@ public class Commands implements CommandExecutor {
 		 */
 		if(cmd.getName().toLowerCase().equals("reg")) {
 			
-			if(args[0] == "" && args[1] == "") {
+			if(args.length != 2) {
 				sender.sendMessage(ChatColor.RED + "Du måste skriva både email och lösenord!");
 				return false;
 			}
