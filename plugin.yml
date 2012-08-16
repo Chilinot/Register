@@ -1,17 +1,17 @@
 name: Register
 main: me.lucasemanuel.register.Main
-version: 1.5
+version: 1.8
 
 commands:
   reg:
     description: Used to register to the forum.
     usage: /<command> <e-post> <losenord>
-    permission: register.register
+    permission: maera.register.register
   mpromote:
     description: Promotes a user
     usage: /<command> <spelarnamn> <rank>
-    permission: register.promote
+    permission: maera.register.mpromote
   mdemote:
     description: Demotes a user
     usage: /<command> <spelarnamn> <rank>
-    permission: register.demote
+    permission: maera.register.mdemote
