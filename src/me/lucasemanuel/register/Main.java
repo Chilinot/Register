@@ -39,7 +39,7 @@ public class Main extends JavaPlugin {
 		logger = new ConsoleLogger(this, "Main");
 		
 		
-		// Configuration
+		// Configuration 
 		
 		Config.load(this);
 		FileConfiguration config = this.getConfig();
