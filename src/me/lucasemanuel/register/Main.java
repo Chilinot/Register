@@ -33,7 +33,8 @@ public class Main extends JavaPlugin {
 		FileConfiguration config = this.getConfig();
 		
 		if(config.getString("APIkeys.register") == "" || config.getString("scripts.register") == "" || 
-		   config.getString("APIkeys.promote")  == "" || config.getString("scripts.promote")  == "") {
+		   config.getString("APIkeys.promote")  == "" || config.getString("scripts.promote")  == "" ||
+		   config.getString("commandRegionName") == "") {
 			
 			logger.severe("Config not configured! Exiting!");
 			return;

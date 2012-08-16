@@ -15,6 +15,7 @@ public class Config {
 	public static String APIkeys_promote = "";
 	public static String scripts_register = "";
 	public static String scripts_promote = "";
+	public static String commandRegionName = "";
 
 	/* -------------------------------- *
 	 *          Do not touch!           *
