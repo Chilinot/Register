@@ -86,7 +86,12 @@ class CmdExec implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		
+		//TODO
+		/***********
+		 * Kolla så att spelaren är i specifierad WorldGuard region
+		 * annars ska den skriva ut att man måste gå till spawn och följa
+		 * signsen eller något.
+		 */
 		if(cmd.getName().toLowerCase().equals("reg")) {
 			
 			if(args.length != 2) {
