@@ -22,6 +22,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.HashMap;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -29,6 +30,12 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
+
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import com.sk89q.worldguard.protection.ApplicableRegionSet;
+import com.sk89q.worldguard.protection.managers.RegionManager;
+import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 
 public class Commands implements CommandExecutor {
 	
@@ -212,25 +219,42 @@ public class Commands implements CommandExecutor {
 	
 	private boolean isInRegion(Location playerlocation) {
 		
-		FileConfiguration config = this.plugin.getConfig();
+		String regionname = this.plugin.getConfig().getString("commandRegionName");
 		
-		double x = playerlocation.getX();
-		double y = playerlocation.getY();
-		double z = playerlocation.getZ();
-		
-		double minX = config.getDouble("regregion.minX");
-		double minY = config.getDouble("regregion.minY");
-		double minZ = config.getDouble("regregion.minZ");
-		
-		double maxX = config.getDouble("regregion.maxX");
-		double maxY = config.getDouble("regregion.maxY");
-		double maxZ = config.getDouble("regregion.maxZ");
-		
-		if( (x <= maxX && x >= minX) && (y <= maxY && y <= minY) && (z <= maxZ && z >= minZ) ) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		if (regionname == null) {
+            return true;
+        }
+        ApplicableRegionSet set = getWGSet(playerlocation);
+        if (set == null) {
+            return false;
+        }
+        for (ProtectedRegion r : set) {
+            if (r.getId().equalsIgnoreCase(regionname)) {
+                return true;
+            }
+        }
+        return false;
 	}
+	
+	private static ApplicableRegionSet getWGSet(Location loc) {
+        WorldGuardPlugin wg = getWorldGuard();
+        if (wg == null) {
+            return null;
+        }
+        RegionManager rm = wg.getRegionManager(loc.getWorld());
+        if (rm == null) {
+            return null;
+        }
+        return rm.getApplicableRegions(com.sk89q.worldguard.bukkit.BukkitUtil.toVector(loc));
+    }
+ 
+    public static WorldGuardPlugin getWorldGuard() {
+        Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("WorldGuard");
+ 
+        // WorldGuard may not be loaded
+        if (plugin == null || !(plugin instanceof WorldGuardPlugin)) {
+            return null;
+        }
+        return (WorldGuardPlugin) plugin;
+    }
 }
