@@ -1,6 +1,6 @@
 name: Register
 main: me.lucasemanuel.register.Main
-version: 2.0
+version: 1.6
 
 commands:
   reg:
