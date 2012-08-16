@@ -63,7 +63,7 @@ public class Main extends JavaPlugin {
 		
 		// Finished
 		
-		logger.debug("Started");
+		logger.debug("Maera Register Started");
 	}
 }
 
@@ -156,6 +156,8 @@ class CmdExec implements CommandExecutor {
 	
 	private boolean promoteDemote(CommandSender sender, String[] args) {
 		
+		String playername = args[0];
+		
 		if(args.length != 2) {
 			sender.sendMessage(ChatColor.RED + "Felaktig användning!");
 			return false;
@@ -166,7 +168,6 @@ class CmdExec implements CommandExecutor {
 			return true;
 		}
 		
-		String playername = args[0];
 		int rank = this.idlist.get(args[1]);
 		
 		String urlString = this.plugin.getConfig().getString("scripts.promote") + "?key=" + this.plugin.getConfig().getString("APIkeys.promote") + "&username=" + playername + "&rank=" + rank;
@@ -184,6 +185,10 @@ class CmdExec implements CommandExecutor {
 					break;
 					
 				case "2":
+					sender.sendMessage(ChatColor.RED + playername + " är en moderator eller högre. Du kan inte " + args[1] + "a en sådan medlem");
+					break;
+					
+				case "3":
 					sender.sendMessage(ChatColor.RED + playername + " finns inte!");
 					break;
 					
