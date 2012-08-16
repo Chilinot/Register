@@ -63,6 +63,11 @@ public class Commands implements CommandExecutor {
 		 */
 		if(cmd.getName().toLowerCase().equals("reg")) {
 			
+			if(!isInRegion(((Player)sender).getLocation())) {
+				sender.sendMessage(ChatColor.RED + "Du måste befinna dig vid regelskyltarna för att kunna använda detta kommando!");
+				return true;
+			}
+			
 			if(args.length != 2) {
 				sender.sendMessage(ChatColor.RED + "Du måste skriva både email och lösenord!");
 				return false;
@@ -70,11 +75,6 @@ public class Commands implements CommandExecutor {
 			
 			if(!(sender instanceof Player)) {
 				sender.sendMessage(ChatColor.RED + "Du måste vara en spelare för att kunna använda detta kommando!");
-				return true;
-			}
-			
-			if(!isInRegion(((Player)sender).getLocation())) {
-				sender.sendMessage(ChatColor.RED + "Du måste befinna dig vid regelskyltarna för att kunna använda detta kommando!");
 				return true;
 			}
 			
