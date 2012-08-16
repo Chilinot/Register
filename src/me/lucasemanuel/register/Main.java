@@ -89,7 +89,7 @@ class CmdExec implements CommandExecutor {
 		
 		if(cmd.getName().toLowerCase().equals("reg")) {
 			
-			if(args.length != 2) {
+			if(args.length != 2 && args[0] == "" && args[1] == "") {
 				sender.sendMessage(ChatColor.RED + "Felaktig användning!");
 				return false;
 			}
