@@ -94,6 +94,11 @@ class CmdExec implements CommandExecutor {
 				return false;
 			}
 			
+			if(args[0] == "" && args[1] == ""){
+				sender.sendMessage(ChatColor.RED + "Du måste skriva både email och lösenord!");
+				return false;
+			}
+			
 			if(!(sender instanceof Player)) {
 					sender.sendMessage(ChatColor.RED + "Du måste vara en spelare för att kunna använda detta kommando!");
 					return true;
