@@ -140,12 +140,12 @@ class CmdExec implements CommandExecutor {
 			
 			return true;
 		}
-		else if(cmd.getName().toLowerCase().equals("promote")) {
+		else if(cmd.getName().toLowerCase().equals("mpromote")) {
 			//TODO promote command - high priority
 			
 			return promoteDemote(sender, args);
 		}
-		else if(cmd.getName().toLowerCase().equals("demote")) {
+		else if(cmd.getName().toLowerCase().equals("mdemote")) {
 			//TODO demote command - high priority
 			
 			return promoteDemote(sender, args);
