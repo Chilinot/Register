@@ -151,12 +151,6 @@ public class Commands implements CommandExecutor {
 	
 	private String sendGETdata(String urlString) {
 		
-		this.plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, new Runnable() {
-			public void run() {
-				
-			}
-		});
-		
 		String answer = null;
 		
 		try {
