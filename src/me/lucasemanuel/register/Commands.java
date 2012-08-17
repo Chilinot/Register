@@ -55,12 +55,7 @@ public class Commands implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		//TODO
-		/***********
-		 * Kolla så att spelaren är i specifierad WorldGuard region
-		 * annars ska den skriva ut att man måste gå till spawn och följa
-		 * signsen eller något.
-		 */
+		
 		if(cmd.getName().toLowerCase().equals("reg")) {
 			
 			if(!isInRegion(((Player)sender).getLocation())) {
@@ -91,31 +86,7 @@ public class Commands implements CommandExecutor {
 			
 			String urlString = this.plugin.getConfig().getString("scripts.register") + "?key=" + this.plugin.getConfig().getString("APIkeys.register") + "&username=" + name + "&email=" + email + "&pass=" + password;
 			
-			String answer = sendGETdata(urlString);
-			
-			if(answer != null) {
-				switch(answer) {
-					
-					case "0":
-						sender.sendMessage(ChatColor.GREEN + "Grattis " + name + "! Du har registrerats på forumet med ranken " + ChatColor.LIGHT_PURPLE + "Lärling");
-						((Player)sender).chat("/sync");
-						break;
-						
-					case "1":
-						sender.sendMessage(ChatColor.RED + "E-post redan registrerat!");
-						break;
-						
-					case "2":
-						sender.sendMessage(ChatColor.RED + "Användarnamnet finns redan!");
-						break;
-						
-					default:
-						sender.sendMessage(ChatColor.RED + "Något verkar ha gått snett! Kontakta admin/mod!");
-				}
-			}
-			else {
-				sender.sendMessage(ChatColor.RED + "Oops! Något gick visst fel! Kontakta admin/mod.");
-			}
+			new RegisterThread((Player) sender, urlString);
 			
 			return true;
 		}
@@ -179,6 +150,12 @@ public class Commands implements CommandExecutor {
 	}
 	
 	private String sendGETdata(String urlString) {
+		
+		this.plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, new Runnable() {
+			public void run() {
+				
+			}
+		});
 		
 		String answer = null;
 		

@@ -1,6 +1,6 @@
 name: Register
 main: me.lucasemanuel.register.Main
-version: 1.6.2
+version: 1.7
 depend: [WorldGuard]
 
 commands:
