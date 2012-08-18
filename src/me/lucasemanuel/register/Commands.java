@@ -58,27 +58,29 @@ public class Commands implements CommandExecutor {
 		
 		if(cmd.getName().toLowerCase().equals("reg")) {
 			
-			if(!isInRegion(((Player)sender).getLocation())) {
-				sender.sendMessage(ChatColor.RED + "Du måste befinna dig vid regelskyltarna för att kunna använda detta kommando!");
-				return true;
-			}
-			
-			if(args.length != 2) {
-				sender.sendMessage(ChatColor.RED + "Du måste skriva både email och lösenord!");
-				return false;
-			}
-			
 			if(!(sender instanceof Player)) {
 				sender.sendMessage(ChatColor.RED + "Du måste vara en spelare för att kunna använda detta kommando!");
 				return true;
 			}
 			
+			Player player = (Player) sender;
+			
+			if(!isInRegion(player.getLocation())) {
+				sender.sendMessage(ChatColor.RED + "Du måste befinna dig vid regelskyltarna för att kunna använda detta kommando!");
+				return true;
+			}
+			
+			if(args.length != 2) {
+				player.sendMessage(ChatColor.RED + "Du måste skriva både email och lösenord!");
+				return false;
+			}
+			
 			String email    = args[0];
 			String password = args[1];
-			String name     = ((Player)sender).getName();
+			String name     = player.getName();
 			
 			if(checkComplexity(password) == false) {
-				sender.sendMessage(ChatColor.RED + "Ditt lösenord måste vara minst 5 tecken långt!");
+				player.sendMessage(ChatColor.RED + "Ditt lösenord måste vara minst 5 tecken långt!");
 				return true;
 			}
 			
@@ -86,7 +88,7 @@ public class Commands implements CommandExecutor {
 			
 			String urlString = this.plugin.getConfig().getString("scripts.register") + "?key=" + this.plugin.getConfig().getString("APIkeys.register") + "&username=" + name + "&email=" + email + "&pass=" + password;
 			
-			new RegisterThread((Player) sender, urlString);
+			new RegisterThread(player, urlString);
 			
 			return true;
 		}
