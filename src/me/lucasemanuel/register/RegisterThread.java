@@ -71,7 +71,7 @@ public class RegisterThread extends Thread {
 					break;
 					
 				default:
-					player.sendMessage(ChatColor.RED + "Något verkar ha gått snett! Kontakta admin/mod!");
+					player.sendMessage(ChatColor.RED + "Felaktigt svar från hemsidan! Kontakta admin/mod!");
 			}
 		}
 		else {
