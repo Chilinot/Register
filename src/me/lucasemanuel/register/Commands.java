@@ -40,7 +40,6 @@ public class Commands implements CommandExecutor {
 	
 	private ConsoleLogger logger;
 	private Main plugin;
-	private Player player;
 	
 	@SuppressWarnings("serial")
 	private final HashMap<String, Integer> idlist = new HashMap<String, Integer>() {{
@@ -126,8 +125,13 @@ public class Commands implements CommandExecutor {
 			switch(answer) {
 				
 				case "0":
-					sender.sendMessage(ChatColor.GREEN + "Grattis " + player.getName() + "! Du har registrerats på forumet med ranken " + ChatColor.LIGHT_PURPLE + "Lärling");
-					player.chat("/sync");
+					sender.sendMessage(ChatColor.GREEN + "Rankändring lyckad!");
+					
+					// Snyggaste
+					Player player = null; 
+					if((player = Bukkit.getPlayer(playername)) != null) player.chat("/sync"); 
+					else sender.sendMessage(ChatColor.GREEN + "Spelaren verkar inte vara online! Säg åt denna att använda /sync nästa gång denne logger in!");
+					
 					break;
 				
 				case "1":
