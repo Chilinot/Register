@@ -119,9 +119,11 @@ public class Commands implements CommandExecutor {
 		int rank = this.idlist.get(args[1]);
 		
 		String urlString = this.plugin.getConfig().getString("scripts.promote") + "?key=" + this.plugin.getConfig().getString("APIkeys.promote") + "&username=" + playername + "&rank=" + rank;
-		String answer = sendGETdata(urlString);
+		String answer = "" + sendGETdata(urlString);
 		
-		if(answer != null) {
+		logger.debug("Answer from sendGETdata: " + answer);
+		
+		if(!answer.equals("")) {
 			switch(answer) {
 				
 				case "0":
