@@ -48,6 +48,8 @@ public class RegisterThread extends Thread {
 		    BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 		    answer = in.readLine();
 		    
+		    in.close();
+		    
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
