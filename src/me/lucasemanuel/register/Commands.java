@@ -40,6 +40,7 @@ public class Commands implements CommandExecutor {
 	
 	private ConsoleLogger logger;
 	private Main plugin;
+	private Player player;
 	
 	@SuppressWarnings("serial")
 	private final HashMap<String, Integer> idlist = new HashMap<String, Integer>() {{
@@ -125,7 +126,8 @@ public class Commands implements CommandExecutor {
 			switch(answer) {
 				
 				case "0":
-					sender.sendMessage(ChatColor.GREEN + playername + " har nu rank " + args[1]);
+					sender.sendMessage(ChatColor.GREEN + "Grattis " + player.getName() + "! Du har registrerats på forumet med ranken " + ChatColor.LIGHT_PURPLE + "Lärling");
+					player.chat("/sync");
 					break;
 				
 				case "1":

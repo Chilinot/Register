@@ -25,7 +25,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 public class RegisterThread extends Thread {
-	
 	private final String urlString;
 	private final Player player;
 	
@@ -56,22 +55,26 @@ public class RegisterThread extends Thread {
 		
 		if(answer != null) {
 			switch(answer) {
+			
+			case "0":
+				player.sendMessage(ChatColor.GREEN + "Grattis " + player.getName() + "! Du har registrerats på forumet med ranken " + ChatColor.LIGHT_PURPLE + "Lärling");
+				player.chat("/sync");
+				break;
+			
+			case "1":
+				player.sendMessage(ChatColor.RED + "Rankändringen kunde inte genomföras!");
+				break;
 				
-				case "0":
-					player.sendMessage(ChatColor.GREEN + "Grattis " + player.getName() + "! Du har registrerats på forumet med ranken " + ChatColor.LIGHT_PURPLE + "Lärling");
-					player.chat("/sync");
-					break;
-					
-				case "1":
-					player.sendMessage(ChatColor.RED + "E-post redan registrerat!");
-					break;
-					
-				case "2":
-					player.sendMessage(ChatColor.RED + "Användarnamnet finns redan!");
-					break;
-					
-				default:
-					player.sendMessage(ChatColor.RED + "Felaktigt svar från hemsidan! Kontakta admin/mod!");
+			case "2":
+				player.sendMessage(ChatColor.RED + player.getName() + " är en moderator eller högre. Du kan inte promota/demotaa en sådan medlem");
+				break;
+				
+			case "3":
+				player.sendMessage(ChatColor.RED + player.getName() + " finns inte!");
+				break;
+				
+			default:
+				player.sendMessage(ChatColor.RED + "Felaktigt svar från fonix skript! Ställ den jäveln till rätta!");
 			}
 		}
 		else {
