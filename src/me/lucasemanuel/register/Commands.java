@@ -143,7 +143,7 @@ public class Commands implements CommandExecutor {
 					break;
 					
 				default:
-					sender.sendMessage(ChatColor.RED + "Ooops något verkar ha gått snett! Skyll på Lucas!");
+					sender.sendMessage(ChatColor.RED + "Felaktigt svar från hemsidan!");
 			}
 		}
 		else {
