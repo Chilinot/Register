@@ -121,27 +121,35 @@ public class Commands implements CommandExecutor {
 		String urlString = this.plugin.getConfig().getString("scripts.promote") + "?key=" + this.plugin.getConfig().getString("APIkeys.promote") + "&username=" + playername + "&rank=" + rank;
 		String answer = sendGETdata(urlString);
 		
-		logger.debug("Answer from sendGETdata: " + answer);
+		logger.debug("Answer from sendGETdata: '" + answer + "'");
 		
 		if(answer != null) {
-			if(answer.equals("0")) {
-				sender.sendMessage(ChatColor.GREEN + "Rankändring lyckad!");
+			switch(answer) {
 				
-				Player player = Bukkit.getPlayer(playername); 
-				if(player != null) player.chat("/sync"); 
-				else sender.sendMessage(ChatColor.GREEN + "Spelaren verkar inte vara online! Säg åt denna att använda /sync nästa gång denne logger in!");
-			}
-			else if(answer.equals("1")) {
-				sender.sendMessage(ChatColor.RED + "Rankändringen kunde inte genomföras!");
-			}
-			else if(answer.equals("2")) {
-				sender.sendMessage(ChatColor.RED + playername + " är en moderator eller högre. Du kan inte " + args[1] + "a en sådan medlem");
-			}
-			else if(answer.equals("3")) {
-				sender.sendMessage(ChatColor.RED + playername + " finns inte!");
-			}
-			else {
-				sender.sendMessage(ChatColor.RED + "Felaktigt svar från hemsidan!");
+				case "0":
+					sender.sendMessage(ChatColor.GREEN + "Rankändring lyckad!");
+					
+					Player player = Bukkit.getPlayer(playername); 
+					if(player != null) player.chat("/sync"); 
+					else sender.sendMessage(ChatColor.GREEN + "Spelaren verkar inte vara online! Säg åt denna att använda /sync nästa gång denne logger in!");
+					
+					break;
+					
+				case "1":
+					sender.sendMessage(ChatColor.RED + "Rankändringen kunde inte genomföras!");
+					break;
+					
+				case "2":
+					sender.sendMessage(ChatColor.RED + playername + " är en moderator eller högre. Du kan inte " + args[1] + "a en sådan medlem");
+					break;
+					
+				case "3":
+					sender.sendMessage(ChatColor.RED + playername + " finns inte!");
+					break;
+					
+				default:
+					sender.sendMessage(ChatColor.RED + "Felaktigt svar från hemsidan!");
+					break;
 			}
 		}
 		else {
