@@ -141,6 +141,7 @@ public class Commands implements CommandExecutor {
 					
 				case "2":
 					sender.sendMessage(ChatColor.RED + playername + " är redan " + args[1] + " ingen ändring gjordes.");
+					break;
 					
 				case "3":
 					sender.sendMessage(ChatColor.RED + playername + " är en moderator. Du kan inte promota/demota en sådan medlem");
