@@ -140,10 +140,13 @@ public class Commands implements CommandExecutor {
 					break;
 					
 				case "2":
-					sender.sendMessage(ChatColor.RED + playername + " är en moderator eller högre. Du kan inte " + args[1] + "a en sådan medlem");
-					break;
+					sender.sendMessage(ChatColor.RED + playername + " är redan " + args[1] + " ingen ändring gjordes.");
 					
 				case "3":
+					sender.sendMessage(ChatColor.RED + playername + " är en moderator. Du kan inte promota/demota en sådan medlem");
+					break;
+					
+				case "4":
 					sender.sendMessage(ChatColor.RED + playername + " finns inte!");
 					break;
 					
