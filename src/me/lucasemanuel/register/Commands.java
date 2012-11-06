@@ -83,18 +83,18 @@ public class Commands implements CommandExecutor {
 			String name     = player.getName();
 			
 			if(PasswordValidator(password) == true && EmailValidator(email) == false) {
-				player.sendMessage(ChatColor.RED + "Din emailadress är inte giltig, var god kolla så du skrivit rätt: " + ChatColor.GREEN + email + ChatColor.RED + " Exempel: dittnamn@gmail.com");
-				return false;
+				player.sendMessage(ChatColor.RED + "Eposten " + ChatColor.GREEN + email + ChatColor.RED +" är inte giltig, var god kolla så du skrivit rätt." + ChatColor.BLUE + " Exempel: dittnamn@gmail.com");
+				return true;
 			}
 			
 			else if(PasswordValidator(password) == false && EmailValidator(email) == true) {
 				player.sendMessage(ChatColor.RED + "Lösenordet " + ChatColor.BLUE + password + ChatColor.RED + " måste ha minst en siffra och vara minst 5-20 tecken lång!");
-				return false;
+				return true;
 			}
 			else if(PasswordValidator(password) == false && EmailValidator(email) == false) {
-				player.sendMessage(ChatColor.RED + "Din emailadress är inte giltig, var god kolla så du skrivit rätt: " + ChatColor.GREEN + email + ChatColor.RED + " Exempel: dittnamn@gmail.com");
-				player.sendMessage(ChatColor.RED + "Lösenordet " + ChatColor.BLUE + password + ChatColor.RED + " måste ha minst en siffra och vara minst 5-20 tecken lång!");
-				return false;
+				player.sendMessage(ChatColor.RED + "Eposten " + ChatColor.GREEN + email + ChatColor.RED +" är inte giltig, var god kolla så du skrivit rätt. " + ChatColor.BLUE + "Exempel: dittnamn@gmail.com");
+				player.sendMessage(ChatColor.RED + "Lösenordet " + ChatColor.GREEN + password + ChatColor.RED + " måste ha minst en siffra och vara minst 5-20 tecken lång!");
+				return true;
 			}
 			
 			logger.debug("Registering user: " + name);

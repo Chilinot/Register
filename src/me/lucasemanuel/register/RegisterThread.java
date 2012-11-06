@@ -28,12 +28,14 @@ public class RegisterThread extends Thread {
 	
 	private final String urlString;
 	private final Player player;
-	private final String email="";
-	private final String password="";
+	private final String email;
+	private final String password;
 	
 	public RegisterThread(final Player player, final String email, final String password, final String urlString) {
 		this.urlString = urlString;
 		this.player = player;
+		this.email = email;
+		this.password = password;
 		
 		start();
 	}
@@ -66,7 +68,7 @@ public class RegisterThread extends Thread {
 					player.sendMessage(ChatColor.GREEN + "Användarnamn: " + ChatColor.DARK_AQUA + player.getName() + ChatColor.GREEN + " eller " + ChatColor.DARK_AQUA + email);
 					player.sendMessage(ChatColor.GREEN + "Lösenord: " + ChatColor.DARK_AQUA + password);
 					player.sendMessage(ChatColor.GREEN + "Ser du att någon uppgift inte stämmer? Gör en ticket och skriv vad som är fel så fixar vi det =)");
-					player.chat("/sync");
+					player.chat("/cbsync");
 					break;
 					
 				case "1":
