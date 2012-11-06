@@ -21,6 +21,8 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -53,7 +55,7 @@ public class Commands implements CommandExecutor {
 		this.plugin = instance;
 		this.logger = new ConsoleLogger(instance, "CommandExecutor");
 	}
-
+	
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		
@@ -80,17 +82,24 @@ public class Commands implements CommandExecutor {
 			String password = args[1];
 			String name     = player.getName();
 			
-			if(checkComplexity(password) == false) {
-				player.sendMessage(ChatColor.RED + "Ditt lösenord måste vara minst 5 tecken långt!");
-				return true;
+			if(PasswordValidator(password) == true && EmailValidator(email) == false) {
+				player.sendMessage(ChatColor.RED + "Din emailadress är inte giltig, var god kolla så du skrivit rätt: " + ChatColor.GREEN + email + ChatColor.RED + " Exempel: dittnamn@gmail.com");
+				return false;
+			}
+			
+			else if(PasswordValidator(password) == false && EmailValidator(email) == true) {
+				player.sendMessage(ChatColor.RED + "Lösenordet " + ChatColor.BLUE + password + ChatColor.RED + " måste ha minst en siffra och vara minst 5-20 tecken lång!");
+				return false;
+			}
+			else if(PasswordValidator(password) == false && EmailValidator(email) == false) {
+				player.sendMessage(ChatColor.RED + "Din emailadress är inte giltig, var god kolla så du skrivit rätt: " + ChatColor.GREEN + email + ChatColor.RED + " Exempel: dittnamn@gmail.com");
+				player.sendMessage(ChatColor.RED + "Lösenordet " + ChatColor.BLUE + password + ChatColor.RED + " måste ha minst en siffra och vara minst 5-20 tecken lång!");
+				return false;
 			}
 			
 			logger.debug("Registering user: " + name);
-			
 			String urlString = this.plugin.getConfig().getString("scripts.register") + "?key=" + this.plugin.getConfig().getString("APIkeys.register") + "&username=" + name + "&email=" + email + "&pass=" + password;
-			
 			new RegisterThread(player, email, password, urlString);
-			
 			return true;
 		}
 		else if(cmd.getName().toLowerCase().equals("mpromote")) {
@@ -190,17 +199,47 @@ public class Commands implements CommandExecutor {
 		return answer;
 	}
 	
-	private boolean checkComplexity(String password) {
+	  /**
+	   * Validiera lösenordet
+	   * @param password
+	   * @return true giltigt lösenord, false ogiltigt lösenord
+	   */
+	
+	private boolean PasswordValidator(final String password) {
 		
-		/* 
-		 * Här ändras sättet den kontrollerar lösenord på, 
-		 * just nu kollar den endast om lösenordet är mindre än 5 tecken eller inte.
-		 */
+		final Pattern pattern;
+		final Matcher matcher;
+ 
+		final String PASSWORD_PATTERN = 
+              "((?=.*\\d)(?=.*[a-z]).{5,20})";
 		
-		if(password.length() < 5) return false;
-		
-		return true;
+		pattern = Pattern.compile(PASSWORD_PATTERN);
+		matcher = pattern.matcher(password);
+		return matcher.matches();
+ 
 	}
+	 
+		/**
+		 * Validiera emailadressen som personen skriver in
+		 * 
+		 * @param email
+		 * @return true giltig email, false ogiltig email
+		 * Taget från: http://www.mkyong.com/regular-expressions/how-to-validate-email-address-with-regular-expression/
+		 */
+		private boolean EmailValidator(final String email) {
+			 
+			final Pattern pattern;
+			final Matcher matcher;
+
+			final String EMAIL_PATTERN = 
+				"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+				+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+	 
+			pattern = Pattern.compile(EMAIL_PATTERN);
+			matcher = pattern.matcher(email);
+			return matcher.matches();
+	 
+		}
 	
 	private boolean isInRegion(Location playerlocation) {
 		
