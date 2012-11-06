@@ -28,8 +28,10 @@ public class RegisterThread extends Thread {
 	
 	private final String urlString;
 	private final Player player;
+	private final String email="";
+	private final String password="";
 	
-	public RegisterThread(final Player player, final String urlString) {
+	public RegisterThread(final Player player, final String email, final String password, final String urlString) {
 		this.urlString = urlString;
 		this.player = player;
 		
@@ -59,6 +61,10 @@ public class RegisterThread extends Thread {
 				
 				case "0":
 					player.sendMessage(ChatColor.GREEN + "Grattis " + player.getName() + "! Du har registrerats på forumet med ranken " + ChatColor.LIGHT_PURPLE + "Lärling");
+					player.sendMessage(ChatColor.GREEN + "Du kan nu använda vårat forum genom att gå till " + ChatColor.AQUA + "www.maera.se/forum " + ChatColor.GREEN + "och klicka på Logga In.");
+					player.sendMessage(ChatColor.GREEN + "Logga sedan in med följande uppgifter:");
+					player.sendMessage(ChatColor.GREEN + "Användarnamn: " + ChatColor.DARK_AQUA + player.getName() + ChatColor.GREEN + " eller " + ChatColor.DARK_AQUA + email);
+					player.sendMessage(ChatColor.GREEN + "Lösenord: " + ChatColor.DARK_AQUA + password);
 					player.chat("/sync");
 					break;
 					

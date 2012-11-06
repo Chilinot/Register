@@ -89,7 +89,7 @@ public class Commands implements CommandExecutor {
 			
 			String urlString = this.plugin.getConfig().getString("scripts.register") + "?key=" + this.plugin.getConfig().getString("APIkeys.register") + "&username=" + name + "&email=" + email + "&pass=" + password;
 			
-			new RegisterThread(player, urlString);
+			new RegisterThread(player, email, password, urlString);
 			
 			return true;
 		}
