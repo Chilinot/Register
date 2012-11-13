@@ -102,6 +102,9 @@ public class Commands implements CommandExecutor {
 			new RegisterThread(player, email, password, urlString);
 			return true;
 		}
+		else if(cmd.getName().toLowerCase().equals("glömtlösen")){
+			
+		}
 		else if(cmd.getName().toLowerCase().equals("mpromote")) {
 			return promoteDemote(sender, args);
 		}
