@@ -34,7 +34,7 @@ public class Main extends JavaPlugin {
 		
 		if(config.getString("APIkeys.register") == "" || config.getString("scripts.register") == "" || 
 		   config.getString("APIkeys.promote")  == "" || config.getString("scripts.promote")  == "" ||
-		   config.getString("commandRegionName") == "") {
+		   config.getString("commandRegionName") == "" || config.getString("APIkeys.resetpass") == "") {
 			
 			logger.severe("Config not configured! Exiting!");
 			return;
@@ -46,7 +46,7 @@ public class Main extends JavaPlugin {
 		Commands executor = new Commands(this);
 		
 		this.getCommand("reg").setExecutor(executor);
-		this.getCommand("glömtlösen").setExecutor(executor);
+		this.getCommand("glÃ¶mtlÃ¶sen").setExecutor(executor);
 		this.getCommand("mpromote").setExecutor(executor);
 		this.getCommand("mdemote").setExecutor(executor);
 		
