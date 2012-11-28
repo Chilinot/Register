@@ -34,7 +34,8 @@ public class Main extends JavaPlugin {
 		
 		if(config.getString("APIkeys.register") == "" || config.getString("scripts.register") == "" || 
 		   config.getString("APIkeys.promote")  == "" || config.getString("scripts.promote")  == "" ||
-		   config.getString("commandRegionName") == "" || config.getString("APIkeys.resetpass") == "") {
+		   config.getString("APIkeys.resetpass") == "" || config.getString("scripts.resetpass") == "" ||
+		   config.getString("commandRegionName") == "") {
 			
 			logger.severe("Config not configured! Exiting!");
 			return;
