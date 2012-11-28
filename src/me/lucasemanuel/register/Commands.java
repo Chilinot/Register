@@ -62,7 +62,7 @@ public class Commands implements CommandExecutor {
 		if(cmd.getName().toLowerCase().equals("reg")) {
 			
 			if(!(sender instanceof Player)) {
-				sender.sendMessage(ChatColor.RED + "Du måste vara en spelare för att kunna använda detta kommando!");
+				sender.sendMessage(ChatColor.RED +"Du måste vara en spelare för att kunna använda detta kommando!");
 				return true;
 			}
 			
