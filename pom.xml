@@ -29,6 +29,7 @@
 		  <version>1.6.2-R0.1-SNAPSHOT</version>
 		  <scope>provided</scope>
 	   </dependency>
+	   <!-- WorldGuard -->
 	   <dependency>
 	   	<groupId>com.sk89q</groupId>
 	   	<artifactId>worldguard</artifactId>
