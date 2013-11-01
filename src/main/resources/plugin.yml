@@ -17,7 +17,3 @@ commands:
     description: Demotes a user
     usage: /<command> <spelarnamn> <rank>
     permission: maera.register.mdemote
-  glömtösen:
-    description: Resets password
-    usage: /<command>
-    permission: maera.register.reset

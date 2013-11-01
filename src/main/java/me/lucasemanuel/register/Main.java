@@ -42,7 +42,6 @@ public class Main extends JavaPlugin {
 		Commands executor = new Commands(this);
 		
 		this.getCommand("reg").setExecutor(executor);
-		this.getCommand("glömtlösen").setExecutor(executor);
 		this.getCommand("mpromote").setExecutor(executor);
 		this.getCommand("mdemote").setExecutor(executor);
 		

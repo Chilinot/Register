@@ -104,9 +104,6 @@ public class Commands implements CommandExecutor {
 			new RegisterThread(plugin, player, email, password, urlString);
 			return true;
 		}
-		else if (cmd.getName().toLowerCase().equals("glömtlösen")) {
-			return resetpass(sender, args);
-		}
 		else if (cmd.getName().toLowerCase().equals("mpromote")) {
 			return promoteDemote(sender, args);
 		}
@@ -115,22 +112,6 @@ public class Commands implements CommandExecutor {
 		}
 		
 		return false;
-	}
-	
-	private boolean resetpass(CommandSender sender, String[] args) {
-		Player player = (Player) sender;
-		
-		String urlString = this.plugin.getConfig().getString("scripts.resetpass") + "?key=" + this.plugin.getConfig().getString("APIkeys.resetpass") + "&username=" + player;
-		String answer = sendGETdata(urlString);
-		
-		if (answer != null || answer != "0") {
-			sender.sendMessage(ChatColor.GREEN + "Ditt lösenord är återställt!");
-			sender.sendMessage(ChatColor.DARK_AQUA + "Ditt nya lösenord är följande");
-			sender.sendMessage(ChatColor.DARK_AQUA + "Lösenord:" + ChatColor.AQUA + answer);
-		}
-		
-		logger.debug("Answer from sendGETdata: '" + answer + "'");
-		return true;
 	}
 	
 	private boolean promoteDemote(CommandSender sender, String[] args) {
