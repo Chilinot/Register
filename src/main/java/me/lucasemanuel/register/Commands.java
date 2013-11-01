@@ -101,7 +101,7 @@ public class Commands implements CommandExecutor {
 			
 			logger.debug("Registering user: " + name);
 			String urlString = this.plugin.getConfig().getString("scripts.register") + "?key=" + this.plugin.getConfig().getString("APIkeys.register") + "&username=" + name + "&email=" + email + "&pass=" + password;
-			new RegisterThread(player, email, password, urlString);
+			new RegisterThread(plugin, player, email, password, urlString);
 			return true;
 		}
 		else if (cmd.getName().toLowerCase().equals("glömtlösen")) {
