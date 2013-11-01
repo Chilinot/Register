@@ -1,6 +1,6 @@
 name: Register
 main: me.lucasemanuel.register.Main
-version: 2.0
+version: 2.1
 depend: [WorldGuard]
 
 commands:
@@ -17,6 +17,6 @@ commands:
     usage: /<command> <spelarnamn> <rank>
     permission: maera.register.mdemote
   glömtösen:
-  	description: Resets password
-  	usage: /<command>
-  	permission: maera.register.reset
+    description: Resets password
+    usage: /<command>
+    permission: maera.register.reset

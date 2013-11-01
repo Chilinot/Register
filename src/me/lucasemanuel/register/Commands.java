@@ -46,9 +46,12 @@ public class Commands implements CommandExecutor {
 	@SuppressWarnings("serial")
 	private final HashMap<String, Integer> idlist = new HashMap<String, Integer>() {{
 		put("bannad", 7);
-		put("larling", 38);
-		put("medlem", 39);
-		put("pro", 40);
+		put("medlem", 49);
+		put("vipa", 43);
+		put("vipb", 44);
+		put("vipc", 45);
+		put("helper", 46);
+		put("byggare", 47);
 	}};
 	
 	public Commands(Main instance) {
