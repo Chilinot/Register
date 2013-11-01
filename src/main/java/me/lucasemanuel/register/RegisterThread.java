@@ -63,12 +63,12 @@ public class RegisterThread extends Thread {
 			switch (answer) {
 			
 				case "0":
-					player.sendMessage(ChatColor.GREEN + "Grattis " + player.getName() + "! Du har registrerats pÃ¥ forumet med ranken " + ChatColor.LIGHT_PURPLE + "LÃ¤rling");
-					player.sendMessage(ChatColor.GREEN + "Du kan nu anvÃ¤nda vÃ¥rt forum genom att gÃ¥ till " + ChatColor.AQUA + "www.maera.se/forum " + ChatColor.GREEN + "och klicka pÃ¥ Logga In.");
-					player.sendMessage(ChatColor.GREEN + "Logga sedan in med fÃ¶ljande uppgifter:");
-					player.sendMessage(ChatColor.GREEN + "AnvÃ¤ndarnamn: " + ChatColor.DARK_AQUA + player.getName() + ChatColor.GREEN + " eller " + ChatColor.DARK_AQUA + email);
-					player.sendMessage(ChatColor.GREEN + "LÃ¶senord: " + ChatColor.DARK_AQUA + password);
-					player.sendMessage(ChatColor.GREEN + "Ser du att nÃ¥gon uppgift inte stÃ¤mmer? GÃ¶r en ticket och skriv vad som Ã¤r fel sÃ¥ fixar vi det =)");
+					player.sendMessage(ChatColor.GREEN + "Grattis " + player.getName() + "! Du har registrerats på forumet med ranken " + ChatColor.LIGHT_PURPLE + "Lärling");
+					player.sendMessage(ChatColor.GREEN + "Du kan nu använda vårt forum genom att gå till " + ChatColor.AQUA + "www.maera.se/forum " + ChatColor.GREEN + "och klicka på Logga In.");
+					player.sendMessage(ChatColor.GREEN + "Logga sedan in med följande uppgifter:");
+					player.sendMessage(ChatColor.GREEN + "Användarnamn: " + ChatColor.DARK_AQUA + player.getName() + ChatColor.GREEN + " eller " + ChatColor.DARK_AQUA + email);
+					player.sendMessage(ChatColor.GREEN + "Lösenord: " + ChatColor.DARK_AQUA + password);
+					player.sendMessage(ChatColor.GREEN + "Ser du att någon uppgift inte stämmer? Gör en ticket och skriv vad som är fel så fixar vi det =)");
 					player.chat("/cbsync");
 					break;
 				
@@ -77,16 +77,16 @@ public class RegisterThread extends Thread {
 					break;
 				
 				case "2":
-					player.sendMessage(ChatColor.RED + "AnvÃ¤ndarnamnet finns redan!");
+					player.sendMessage(ChatColor.RED + "Användarnamnet finns redan!");
 					break;
 				
 				default:
-					player.sendMessage(ChatColor.RED + "NÃ¥got verkar ha gÃ¥tt snett! Kontakta admin/mod!");
+					player.sendMessage(ChatColor.RED + "Något verkar ha gått snett! Kontakta admin/mod!");
 					break;
 			}
 		}
 		else {
-			player.sendMessage(ChatColor.RED + "Oops! NÃ¥got gick visst fel! Kontakta admin/mod.");
+			player.sendMessage(ChatColor.RED + "Oops! Något gick visst fel! Kontakta admin/mod.");
 		}
 	}
 }
