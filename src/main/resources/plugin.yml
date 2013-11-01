@@ -1,0 +1,23 @@
+name: ${project.name}
+author: LucasEmanuel
+version: ${project.version}
+main: ${project.groupId}.${project.artifactId}.Main
+depend: [WorldGuard]
+
+commands:
+  reg:
+    description: Used to register to the forum.
+    usage: /<command> <e-post> <losenord>
+    permission: maera.register.register
+  mpromote:
+    description: Promotes a user
+    usage: /<command> <spelarnamn> <rank>
+    permission: maera.register.mpromote
+  mdemote:
+    description: Demotes a user
+    usage: /<command> <spelarnamn> <rank>
+    permission: maera.register.mdemote
+  glömtösen:
+    description: Resets password
+    usage: /<command>
+    permission: maera.register.reset
