@@ -47,6 +47,6 @@ public class Main extends JavaPlugin {
 		
 		// Finished
 		
-		logger.debug("Maera Register Started");
+		logger.debug("Spelplaneten Register Started");
 	}
 }

@@ -73,13 +73,12 @@ public class RegisterThread extends Thread {
 				public void run() {
 					switch (foo) {
 						case "0":
-							player.sendMessage(ChatColor.GREEN + "Grattis " + player.getName() + "! Du har registrerats på forumet med ranken " + ChatColor.LIGHT_PURPLE + "Lärling");
-							player.sendMessage(ChatColor.GREEN + "Du kan nu använda vårt forum genom att gå till " + ChatColor.AQUA + "www.maera.se/forum " + ChatColor.GREEN + "och klicka på Logga In.");
+							player.sendMessage(ChatColor.GREEN + "Grattis " + player.getName() + "! Du har registrerats som medlem på Spelplanetens forum.");
+							player.sendMessage(ChatColor.GREEN + "Du kan nu använda vårt forum genom att gå till " + ChatColor.AQUA + "www.spelplaneten.net/forum " + ChatColor.GREEN + "och klicka på Logga In.");
 							player.sendMessage(ChatColor.GREEN + "Logga sedan in med följande uppgifter:");
 							player.sendMessage(ChatColor.GREEN + "Användarnamn: " + ChatColor.DARK_AQUA + player.getName() + ChatColor.GREEN + " eller " + ChatColor.DARK_AQUA + email);
 							player.sendMessage(ChatColor.GREEN + "Lösenord: " + ChatColor.DARK_AQUA + password);
-							player.sendMessage(ChatColor.GREEN + "Ser du att någon uppgift inte stämmer? Gör en ticket och skriv vad som är fel så fixar vi det =)");
-							player.chat("/cbsync");
+							player.chat("/sync");
 							break;
 						
 						case "1":
