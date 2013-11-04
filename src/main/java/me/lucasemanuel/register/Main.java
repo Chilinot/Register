@@ -24,7 +24,9 @@ public class Main extends JavaPlugin {
 	
 	public void onEnable() {
 		
-		logger = new ConsoleLogger(this, "Main");
+		ConsoleLogger.init(this);
+		
+		logger = new ConsoleLogger("Main");
 		
 		// Configuration
 		

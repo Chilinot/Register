@@ -56,7 +56,7 @@ public class Commands implements CommandExecutor {
 	
 	public Commands(Main instance) {
 		this.plugin = instance;
-		this.logger = new ConsoleLogger(instance, "CommandExecutor");
+		this.logger = new ConsoleLogger("CommandExecutor");
 	}
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
