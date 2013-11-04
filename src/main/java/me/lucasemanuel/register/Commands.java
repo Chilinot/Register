@@ -100,16 +100,16 @@ public class Commands implements CommandExecutor {
 			String password = args[1];
 			String name = player.getName();
 			
-			if (passwordValidator(password) == true && emailValidator(email) == false) {
+			if (!emailValidator(email)) {
 				player.sendMessage(ChatColor.RED + "Eposten " + ChatColor.GREEN + email + ChatColor.RED + " är inte giltig, var god kolla så du skrivit rätt." + ChatColor.BLUE + " Exempel: dittnamn@gmail.com");
 				return true;
 			}
 			
-			else if (passwordValidator(password) == false && emailValidator(email) == true) {
+			else if (!passwordValidator(password)) {
 				player.sendMessage(ChatColor.RED + "Lösenordet " + ChatColor.BLUE + password + ChatColor.RED + " måste ha minst en siffra och vara minst 5-20 tecken lång!");
 				return true;
 			}
-			else if (passwordValidator(password) == false && emailValidator(email) == false) {
+			else if (!passwordValidator(password) && !emailValidator(email)) {
 				player.sendMessage(ChatColor.RED + "Eposten " + ChatColor.GREEN + email + ChatColor.RED + " är inte giltig, var god kolla så du skrivit rätt. " + ChatColor.BLUE + "Exempel: dittnamn@gmail.com");
 				player.sendMessage(ChatColor.RED + "Lösenordet " + ChatColor.GREEN + password + ChatColor.RED + " måste ha minst en siffra och vara minst 5-20 tecken lång!");
 				return true;
