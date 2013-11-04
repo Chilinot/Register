@@ -100,19 +100,20 @@ public class Commands implements CommandExecutor {
 			String password = args[1];
 			String name = player.getName();
 			
-			if (!emailValidator(email)) {
+			if(!emailValidator(email)) {
 				player.sendMessage(ChatColor.RED + "Eposten " + ChatColor.GREEN + email + ChatColor.RED + " är inte giltig, var god kolla så du skrivit rätt." + ChatColor.BLUE + " Exempel: dittnamn@gmail.com");
 				return true;
 			}
-			
-			else if (!passwordValidator(password)) {
+			if(!passwordValidator(password)) {
 				player.sendMessage(ChatColor.RED + "Lösenordet " + ChatColor.BLUE + password + ChatColor.RED + " måste ha minst en siffra och vara minst 5-20 tecken lång!");
 				return true;
 			}
 			
 			logger.debug("Registering user: " + name);
+			
 			String urlString = this.plugin.getConfig().getString("scripts.register") + "?key=" + this.plugin.getConfig().getString("APIkeys.register") + "&username=" + name + "&email=" + email + "&pass=" + password;
 			new RegisterThread(plugin, player, email, password, urlString);
+			
 			return true;
 		}
 		else if (cmd.getName().toLowerCase().equals("mpromote")) {
