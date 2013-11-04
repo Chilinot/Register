@@ -40,6 +40,10 @@ import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
+
+import org.apache.commons.codec.binary.Base64;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -110,9 +114,9 @@ public class Commands implements CommandExecutor {
 			return false;
 		}
 		
+		String name = player.getName();
 		String email = args[0];
 		String password = args[1];
-		String name = player.getName();
 		
 		if(!emailValidator(email)) {
 			player.sendMessage(ChatColor.RED + "Eposten " + ChatColor.GREEN + email + ChatColor.RED + " är inte giltig, var god kolla så du skrivit rätt." + ChatColor.BLUE + " Exempel: dittnamn@gmail.com");
@@ -125,7 +129,14 @@ public class Commands implements CommandExecutor {
 		
 		logger.debug("Registering user: " + name);
 		
-		String urlString = this.plugin.getConfig().getString("scripts.register") + "?key=" + this.plugin.getConfig().getString("APIkeys.register") + "&username=" + name + "&email=" + email + "&pass=" + password;
+		String encryption_key = this.plugin.getConfig().getString("encryption.key");
+		
+		String urlString = this.plugin.getConfig().getString("scripts.register") + 
+				"?key=" + encrypt(this.plugin.getConfig().getString("APIkeys.register"), encryption_key) + 
+				"&username=" + encrypt(name, encryption_key) + 
+				"&email=" + encrypt(email, encryption_key) + 
+				"&pass=" + encrypt(password, encryption_key);
+		
 		new RegisterThread(plugin, player, email, password, urlString);
 		
 		return true;
@@ -147,7 +158,11 @@ public class Commands implements CommandExecutor {
 		
 		int rank = this.idlist.get(args[1]);
 		
-		String urlString = this.plugin.getConfig().getString("scripts.promote") + "?key=" + this.plugin.getConfig().getString("APIkeys.promote") + "&username=" + playername + "&rank=" + rank;
+		String urlString = this.plugin.getConfig().getString("scripts.promote") + 
+				"?key=" + this.plugin.getConfig().getString("APIkeys.promote") + 
+				"&username=" + playername + 
+				"&rank=" + rank;
+		
 		String answer = sendGETdata(urlString);
 		
 		logger.debug("Answer from sendGETdata: '" + answer + "'");
@@ -219,6 +234,27 @@ public class Commands implements CommandExecutor {
 		}
 		
 		return answer;
+	}
+	
+	/**
+	 * Encrypts string with AES using the given key.
+	 * 
+	 * @param input - String to encrypt.
+	 * @param key   - Encryption key.
+	 * @return      - Encrypted string.
+	 */
+	public String encrypt(String input, String key) {
+		byte[] crypted = null;
+		try {
+			SecretKeySpec skey = new SecretKeySpec(key.getBytes(), "AES");
+			Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+			cipher.init(Cipher.ENCRYPT_MODE, skey);
+			crypted = cipher.doFinal(input.getBytes());
+		}
+		catch (Exception e) {
+			logger.severe(e.toString());
+		}
+		return new String(Base64.encodeBase64(crypted));
 	}
 	
 	/**
