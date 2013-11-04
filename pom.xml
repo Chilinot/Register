@@ -91,8 +91,8 @@
 							</filters>
 							<relocations>
 								<relocation>
-									<pattern>org.apache.commons.codec.binary</pattern>
-									<shadedPattern>se.lucasarnstrom.survivalgamesmultiverse.apache-commons.codec.binary</shadedPattern>
+									<pattern>org.apache.commons.codec</pattern>
+									<shadedPattern>me.lucasemanuel.register.apache-commons.codec</shadedPattern>
 								</relocation>
 							</relocations>
 						</configuration>
