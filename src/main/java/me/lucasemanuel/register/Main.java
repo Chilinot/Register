@@ -31,7 +31,13 @@ public class Main extends JavaPlugin {
 		Config.load(this);
 		FileConfiguration config = this.getConfig();
 		
-		if (config.getString("APIkeys.register") == "" || config.getString("scripts.register") == "" || config.getString("APIkeys.promote") == "" || config.getString("scripts.promote") == "" || config.getString("APIkeys.resetpass") == "" || config.getString("scripts.resetpass") == "" || config.getString("commandRegionName") == "") {
+		if (config.getString("APIkeys.register") == "" 
+				|| config.getString("scripts.register")  == "" 
+				|| config.getString("APIkeys.promote")   == "" 
+				|| config.getString("scripts.promote")   == "" 
+				|| config.getString("APIkeys.resetpass") == "" 
+				|| config.getString("scripts.resetpass") == "" 
+				|| config.getString("commandRegionName") == "") {
 			
 			logger.severe("Config not configured! Exiting!");
 			return;
