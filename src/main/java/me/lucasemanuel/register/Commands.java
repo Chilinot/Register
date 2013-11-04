@@ -77,55 +77,60 @@ public class Commands implements CommandExecutor {
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		
-		if (cmd.getName().toLowerCase().equals("reg")) {
-			
-			if (!(sender instanceof Player)) {
-				sender.sendMessage(ChatColor.RED + "Du måste vara en spelare för att kunna använda detta kommando!");
-				return true;
-			}
-			
-			Player player = (Player) sender;
-			
-			if (!isInRegion(player.getLocation())) {
-				sender.sendMessage(ChatColor.RED + "Du måste befinna dig vid regelskyltarna för att kunna använda detta kommando!");
-				return true;
-			}
-			
-			if (args.length != 2) {
-				player.sendMessage(ChatColor.RED + "Du måste skriva både email och lösenord!");
-				return false;
-			}
-			
-			String email = args[0];
-			String password = args[1];
-			String name = player.getName();
-			
-			if(!emailValidator(email)) {
-				player.sendMessage(ChatColor.RED + "Eposten " + ChatColor.GREEN + email + ChatColor.RED + " är inte giltig, var god kolla så du skrivit rätt." + ChatColor.BLUE + " Exempel: dittnamn@gmail.com");
-				return true;
-			}
-			if(!passwordValidator(password)) {
-				player.sendMessage(ChatColor.RED + "Lösenordet " + ChatColor.BLUE + password + ChatColor.RED + " måste ha minst en siffra och vara minst 5-20 tecken lång!");
-				return true;
-			}
-			
-			logger.debug("Registering user: " + name);
-			
-			String urlString = this.plugin.getConfig().getString("scripts.register") + "?key=" + this.plugin.getConfig().getString("APIkeys.register") + "&username=" + name + "&email=" + email + "&pass=" + password;
-			new RegisterThread(plugin, player, email, password, urlString);
-			
-			return true;
-		}
-		else if (cmd.getName().toLowerCase().equals("mpromote")) {
-			return promoteDemote(sender, args);
-		}
-		else if (cmd.getName().toLowerCase().equals("mdemote")) {
-			return promoteDemote(sender, args);
+		String command = cmd.getName().toLowerCase();
+		
+		switch(command) {
+			case "reg":
+				return register(sender, args);
+			case "mpromote":
+				return promoteDemote(sender, args);
+			case "mdemote":
+				return promoteDemote(sender, args);
 		}
 		
 		return false;
 	}
 	
+	private boolean register(CommandSender sender, String[] args) {
+		
+		if (!(sender instanceof Player)) {
+			sender.sendMessage(ChatColor.RED + "Du måste vara en spelare för att kunna använda detta kommando!");
+			return true;
+		}
+		
+		Player player = (Player) sender;
+		
+		if (!isInRegion(player.getLocation())) {
+			sender.sendMessage(ChatColor.RED + "Du måste befinna dig vid regelskyltarna för att kunna använda detta kommando!");
+			return true;
+		}
+		
+		if (args.length != 2) {
+			player.sendMessage(ChatColor.RED + "Du måste skriva både email och lösenord!");
+			return false;
+		}
+		
+		String email = args[0];
+		String password = args[1];
+		String name = player.getName();
+		
+		if(!emailValidator(email)) {
+			player.sendMessage(ChatColor.RED + "Eposten " + ChatColor.GREEN + email + ChatColor.RED + " är inte giltig, var god kolla så du skrivit rätt." + ChatColor.BLUE + " Exempel: dittnamn@gmail.com");
+			return true;
+		}
+		if(!passwordValidator(password)) {
+			player.sendMessage(ChatColor.RED + "Lösenordet " + ChatColor.BLUE + password + ChatColor.RED + " måste ha minst en siffra och vara minst 5-20 tecken lång!");
+			return true;
+		}
+		
+		logger.debug("Registering user: " + name);
+		
+		String urlString = this.plugin.getConfig().getString("scripts.register") + "?key=" + this.plugin.getConfig().getString("APIkeys.register") + "&username=" + name + "&email=" + email + "&pass=" + password;
+		new RegisterThread(plugin, player, email, password, urlString);
+		
+		return true;
+	}
+
 	private boolean promoteDemote(CommandSender sender, String[] args) {
 		
 		String playername = args[0];
