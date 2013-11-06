@@ -43,12 +43,12 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class RegisterThread extends Thread {
 	
-	private final Main 		plugin;
+	private final Main   plugin;
 	
-	private final String	urlString;
-	private final Player	player;
-	private final String	email;
-	private final String	password;
+	private final String urlString;
+	private final Player player;
+	private final String email;
+	private final String password;
 	
 	public RegisterThread(Main p_instance, final Player player, final String email, final String password, final String urlString) {
 		this.urlString = urlString;
@@ -66,7 +66,6 @@ public class RegisterThread extends Thread {
 		String answer = null;
 		
 		try {
-			
 			URL url = new URL(urlString);
 			URLConnection connection = url.openConnection();
 			
@@ -74,7 +73,6 @@ public class RegisterThread extends Thread {
 			answer = in.readLine();
 			
 			in.close();
-			
 		}
 		catch (IOException e) {
 			e.printStackTrace();
@@ -84,6 +82,7 @@ public class RegisterThread extends Thread {
 			
 			final String foo = answer;
 			
+			// Schedules a new task that runs synchronously to the server.
 			new BukkitRunnable() {
 				@Override
 				public void run() {
