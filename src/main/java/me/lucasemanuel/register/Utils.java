@@ -61,12 +61,11 @@ public class Utils {
 		Utils.logger = new ConsoleLogger("Utils");
 	}
 	
-	public static String sendDataToPHP(String urlString) {
+	public static String sendPHPGET(String urlString) {
 		
 		String answer = null;
 		
 		try {
-			
 			logger.debug("Sending url: " + urlString);
 			
 			URL url = new URL(urlString);
@@ -78,7 +77,6 @@ public class Utils {
 			logger.debug("Answer: " + answer);
 			
 			in.close();
-			
 		}
 		catch (IOException e) {
 			logger.severe(e.getMessage());

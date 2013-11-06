@@ -57,7 +57,7 @@ public class RegisterThread extends Thread {
 	
 	public void run() {
 		
-		final String answer = Utils.sendDataToPHP(urlString);
+		final String answer = Utils.sendPHPGET(urlString);
 		
 		if (answer != null) {
 			
