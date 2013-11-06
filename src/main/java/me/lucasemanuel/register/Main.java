@@ -69,6 +69,9 @@ public class Main extends JavaPlugin {
 		this.getCommand("mpromote").setExecutor(executor);
 		this.getCommand("mdemote").setExecutor(executor);
 		
+		// Misc
+		Utils.init(this);
+		
 		// Finished
 		
 		logger.debug("Spelplaneten Register Started");

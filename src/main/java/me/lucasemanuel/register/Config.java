@@ -15,6 +15,7 @@ public class Config {
 	public static String	APIkeys_resetpass	= "";
 	public static String	scripts_register	= "";
 	public static String	scripts_promote		= "";
+	public static String	encryption_key		= "";
 	public static String	commandRegionName	= "";
 	
 	/*

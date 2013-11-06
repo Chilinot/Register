@@ -99,13 +99,14 @@ public class Utils {
 		byte[] crypted = null;
 		
 		try {
-			SecretKeySpec skey = new SecretKeySpec(encryption_key.getBytes("UTF-8"), "AES");
-			Cipher cipher = Cipher.getInstance("AES/CBC/NoPadding");
+			SecretKeySpec skey = new SecretKeySpec(encryption_key.getBytes(), "AES");
+			Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
 			cipher.init(Cipher.ENCRYPT_MODE, skey);
 			crypted = cipher.doFinal(input.getBytes());
 		}
 		catch (Exception e) {
 			logger.severe(e.toString());
+			e.printStackTrace();
 		}
 		
 		return crypted == null ? null : new String(Base64.encodeBase64(crypted));

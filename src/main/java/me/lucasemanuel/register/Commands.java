@@ -31,32 +31,14 @@
 
 package me.lucasemanuel.register;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.HashMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import javax.crypto.Cipher;
-import javax.crypto.spec.SecretKeySpec;
-
-import org.apache.commons.codec.binary.Base64;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
-
-import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
-import com.sk89q.worldguard.protection.ApplicableRegionSet;
-import com.sk89q.worldguard.protection.managers.RegionManager;
-import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 
 public class Commands implements CommandExecutor {
 	
@@ -104,7 +86,7 @@ public class Commands implements CommandExecutor {
 		
 		Player player = (Player) sender;
 		
-		if (!isInRegion(player.getLocation())) {
+		if (!Utils.isInRegion(player.getLocation())) {
 			sender.sendMessage(ChatColor.RED + "Du måste befinna dig vid regelskyltarna för att kunna använda detta kommando!");
 			return true;
 		}
@@ -118,11 +100,11 @@ public class Commands implements CommandExecutor {
 		String email = args[0];
 		String password = args[1];
 		
-		if(!emailValidator(email)) {
+		if(!Utils.emailValidator(email)) {
 			player.sendMessage(ChatColor.RED + "Eposten " + ChatColor.GREEN + email + ChatColor.RED + " är inte giltig, var god kolla så du skrivit rätt." + ChatColor.BLUE + " Exempel: dittnamn@gmail.com");
 			return true;
 		}
-		if(!passwordValidator(password)) {
+		if(!Utils.passwordValidator(password)) {
 			player.sendMessage(ChatColor.RED + "Lösenordet " + ChatColor.BLUE + password + ChatColor.RED + " måste ha minst en siffra och vara minst 5-20 tecken lång!");
 			return true;
 		}
@@ -130,12 +112,15 @@ public class Commands implements CommandExecutor {
 		logger.debug("Registering user: " + name);
 		
 		String encryption_key = this.plugin.getConfig().getString("encryption.key");
+		String api_key        = this.plugin.getConfig().getString("APIkeys.register");
 		
 		String urlString = this.plugin.getConfig().getString("scripts.register") + 
-				"?key=" + encrypt(this.plugin.getConfig().getString("APIkeys.register"), encryption_key) + 
-				"&username=" + encrypt(name, encryption_key) + 
-				"&email=" + encrypt(email, encryption_key) + 
-				"&pass=" + encrypt(password, encryption_key);
+				"?key=" + Utils.encrypt(api_key, encryption_key) + 
+				"&username=" + Utils.encrypt(name, encryption_key) + 
+				"&email=" + Utils.encrypt(email, encryption_key) + 
+				"&pass=" + Utils.encrypt(password, encryption_key);
+		
+		logger.debug("URLString=" + urlString);
 		
 		new RegisterThread(plugin, player, email, password, urlString);
 		
@@ -163,7 +148,7 @@ public class Commands implements CommandExecutor {
 				"&username=" + playername + 
 				"&rank=" + rank;
 		
-		String answer = sendGETdata(urlString);
+		String answer = Utils.sendGETdata(urlString);
 		
 		logger.debug("Answer from sendGETdata: '" + answer + "'");
 		
@@ -207,133 +192,5 @@ public class Commands implements CommandExecutor {
 		}
 		
 		return true;
-	}
-	
-	private String sendGETdata(String urlString) {
-		
-		String answer = null;
-		
-		try {
-			
-			logger.debug("Sending url: " + urlString);
-			
-			URL url = new URL(urlString);
-			URLConnection connection = url.openConnection();
-			
-			BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-			answer = in.readLine();
-			
-			logger.debug("Answer: " + answer);
-			
-			in.close();
-			
-		}
-		catch (IOException e) {
-			logger.severe(e.getMessage());
-			return null;
-		}
-		
-		return answer;
-	}
-	
-	/**
-	 * Encrypts string with AES using the given key.
-	 * 
-	 * @param input - String to encrypt.
-	 * @param key   - Encryption key.
-	 * @return      - Encrypted string.
-	 */
-	public String encrypt(String input, String key) {
-		byte[] crypted = null;
-		try {
-			SecretKeySpec skey = new SecretKeySpec(key.getBytes(), "AES");
-			Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-			cipher.init(Cipher.ENCRYPT_MODE, skey);
-			crypted = cipher.doFinal(input.getBytes());
-		}
-		catch (Exception e) {
-			logger.severe(e.toString());
-		}
-		return new String(Base64.encodeBase64(crypted));
-	}
-	
-	/**
-	 * Validiera lösenordet
-	 * 
-	 * @param password
-	 * @return true giltigt lösenord, false ogiltigt lösenord
-	 */
-	
-	private boolean passwordValidator(final String password) {
-		
-		final Pattern pattern;
-		final Matcher matcher;
-		
-		final String PASSWORD_PATTERN = "((?=.*\\d)(?=.*[a-z]).{5,20})";
-		
-		pattern = Pattern.compile(PASSWORD_PATTERN);
-		matcher = pattern.matcher(password);
-		return matcher.matches();
-		
-	}
-	
-	/**
-	 * Validiera emailadressen som personen skriver in
-	 * 
-	 * @param email
-	 * @return true giltig email, false ogiltig email Taget från: http://www.mkyong.com/regular-expressions/how-to-validate-email-address-with-regular-expression/
-	 */
-	private boolean emailValidator(final String email) {
-		
-		final Pattern pattern;
-		final Matcher matcher;
-		
-		final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-		
-		pattern = Pattern.compile(EMAIL_PATTERN);
-		matcher = pattern.matcher(email);
-		return matcher.matches();
-		
-	}
-	
-	private boolean isInRegion(Location playerlocation) {
-		
-		String regionname = this.plugin.getConfig().getString("commandRegionName");
-		
-		if (regionname == null) {
-			return true;
-		}
-		ApplicableRegionSet set = getWGSet(playerlocation);
-		if (set == null) {
-			return false;
-		}
-		for (ProtectedRegion r : set) {
-			if (r.getId().equalsIgnoreCase(regionname)) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	private static ApplicableRegionSet getWGSet(Location loc) {
-		WorldGuardPlugin wg = getWorldGuard();
-		if (wg == null) {
-			return null;
-		}
-		RegionManager rm = wg.getRegionManager(loc.getWorld());
-		if (rm == null) {
-			return null;
-		}
-		return rm.getApplicableRegions(com.sk89q.worldguard.bukkit.BukkitUtil.toVector(loc));
-	}
-	
-	public static WorldGuardPlugin getWorldGuard() {
-		Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("WorldGuard");
-		
-		// WorldGuard may not be loaded
-		if (plugin == null || !(plugin instanceof WorldGuardPlugin)) {
-			return null;
-		}
-		return (WorldGuardPlugin) plugin;
 	}
 }
