@@ -67,43 +67,13 @@ public class Utils {
 	}
 	
 	/**
-	 * Send data to a webserver using _GET.
-	 * 
-	 * @param urlString - The url with the variables.
-	 * @return - The answer from the webserver, null if failed.
-	 */
-	public static String sendPHPGET(String urlString) {
-		String answer = null;
-		
-		try {
-			logger.debug("Sending url: " + urlString);
-			
-			URL url = new URL(urlString);
-			URLConnection connection = url.openConnection();
-			
-			BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-			answer = in.readLine();
-			
-			logger.debug("Answer: " + answer);
-			
-			in.close();
-		}
-		catch (IOException e) {
-			logger.severe(e.getMessage());
-			return null;
-		}
-		
-		return answer;
-	}
-	
-	/**
 	 * Send data to a webserver using _POST.
 	 * 
 	 * @param urlString - Url to the server.
 	 * @param data - A map with the data to send.
 	 * @return - Answer from the webserver, null if failed.
 	 */
-	public static String sendPHPPost(String urlString, Map<String, String> data) {
+	public static String sendWebPost(String urlString, Map<String, String> data) {
 		String answer = null;
 		
 		try {

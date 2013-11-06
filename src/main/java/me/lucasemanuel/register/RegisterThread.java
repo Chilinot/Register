@@ -82,7 +82,7 @@ public class RegisterThread extends Thread {
 			put("pass",     Utils.encrypt(password,   encryption_key));
 		}};
 		
-		final String answer = Utils.sendPHPPost(url, data);
+		final String answer = Utils.sendWebPost(url, data);
 		
 		if (answer != null) {
 			
