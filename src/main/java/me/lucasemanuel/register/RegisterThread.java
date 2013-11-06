@@ -31,12 +31,6 @@
 
 package me.lucasemanuel.register;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
-
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -63,30 +57,15 @@ public class RegisterThread extends Thread {
 	
 	public void run() {
 		
-		String answer = null;
-		
-		try {
-			URL url = new URL(urlString);
-			URLConnection connection = url.openConnection();
-			
-			BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-			answer = in.readLine();
-			
-			in.close();
-		}
-		catch (IOException e) {
-			e.printStackTrace();
-		}
+		final String answer = Utils.sendDataToPHP(urlString);
 		
 		if (answer != null) {
-			
-			final String foo = answer;
 			
 			// Schedules a new task that runs synchronously to the server.
 			new BukkitRunnable() {
 				@Override
 				public void run() {
-					switch (foo) {
+					switch (answer) {
 						case "0":
 							player.sendMessage(ChatColor.GREEN + "Grattis " + player.getName() + "! Du har registrerats som medlem på Spelplanetens forum.");
 							player.sendMessage(ChatColor.GREEN + "Du kan nu använda vårt forum genom att gå till " + ChatColor.AQUA + "www.spelplaneten.net/forum " + ChatColor.GREEN + "och klicka på Logga In.");
