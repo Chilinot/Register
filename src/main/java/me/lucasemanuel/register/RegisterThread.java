@@ -95,8 +95,9 @@ public class RegisterThread extends Thread {
 					
 					if(player == null || !player.isOnline()) return;
 					
-					switch (answer) {
-						case "0":
+					// A small hack to fix issues when the plugin doesn't get a clean number as answer.
+					switch (answer.charAt(answer.length() -1)) {
+						case '0':
 							player.sendMessage(ChatColor.GREEN + "Grattis " + player.getName() + "! Du har registrerats som medlem på Spelplanetens forum.");
 							player.sendMessage(ChatColor.GREEN + "Du kan nu använda vårt forum genom att gå till " + ChatColor.AQUA + "www.spelplaneten.net/forum " + ChatColor.GREEN + "och klicka på Logga In.");
 							player.sendMessage(ChatColor.GREEN + "Logga sedan in med följande uppgifter:");
@@ -105,16 +106,17 @@ public class RegisterThread extends Thread {
 							player.chat("/sync");
 							break;
 						
-						case "1":
+						case '1':
 							player.sendMessage(ChatColor.RED + "E-post redan registrerat!");
 							break;
 						
-						case "2":
+						case '2':
 							player.sendMessage(ChatColor.RED + "Användarnamnet finns redan!");
 							break;
 						
 						default:
 							player.sendMessage(ChatColor.RED + "Något verkar ha gått snett! Kontakta admin/mod!");
+							System.out.println("SEVERE! Register failed to register user! Answer == Default! Answer=" + answer);
 							break;
 					}
 				}
