@@ -148,7 +148,7 @@ public class Commands implements CommandExecutor {
 				"&username=" + playername + 
 				"&rank=" + rank;
 		
-		String answer = Utils.sendGETdata(urlString);
+		String answer = Utils.sendDataToPHP(urlString);
 		
 		logger.debug("Answer from sendGETdata: '" + answer + "'");
 		

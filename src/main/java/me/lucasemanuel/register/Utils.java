@@ -61,7 +61,7 @@ public class Utils {
 		Utils.logger = new ConsoleLogger("Utils");
 	}
 	
-	public static String sendGETdata(String urlString) {
+	public static String sendDataToPHP(String urlString) {
 		
 		String answer = null;
 		
