@@ -115,10 +115,10 @@ public class Commands implements CommandExecutor {
 		String api_key        = this.plugin.getConfig().getString("APIkeys.register");
 		
 		String urlString = this.plugin.getConfig().getString("scripts.register") + 
-				"?key=" + Utils.encrypt(api_key, encryption_key) + 
-				"&username=" + Utils.encrypt(name, encryption_key) + 
-				"&email=" + Utils.encrypt(email, encryption_key) + 
-				"&pass=" + Utils.encrypt(password, encryption_key);
+				"?key="      + Utils.encrypt(api_key,  encryption_key) + 
+				"&username=" + Utils.encrypt(name,     encryption_key) + 
+				"&email="    + Utils.encrypt(email,    encryption_key) + 
+				"&pass="     + Utils.encrypt(password, encryption_key);
 		
 		logger.debug("URLString=" + urlString);
 		
