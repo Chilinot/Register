@@ -111,18 +111,19 @@ public class Commands implements CommandExecutor {
 		
 		logger.debug("Registering user: " + name);
 		
+		String url            = this.plugin.getConfig().getString("scripts.register");
 		String encryption_key = this.plugin.getConfig().getString("encryption.key");
 		String api_key        = this.plugin.getConfig().getString("APIkeys.register");
 		
-		String urlString = this.plugin.getConfig().getString("scripts.register") + 
-				"?key="      + Utils.encrypt(api_key,  encryption_key) + 
-				"&username=" + Utils.encrypt(name,     encryption_key) + 
-				"&email="    + Utils.encrypt(email,    encryption_key) + 
-				"&pass="     + Utils.encrypt(password, encryption_key);
+//		String urlString = this.plugin.getConfig().getString("scripts.register") + 
+//				"?key="      + Utils.encrypt(api_key,  encryption_key) + 
+//				"&username=" + Utils.encrypt(name,     encryption_key) + 
+//				"&email="    + Utils.encrypt(email,    encryption_key) + 
+//				"&pass="     + Utils.encrypt(password, encryption_key);
+//		
+//		logger.debug("URLString=" + urlString);
 		
-		logger.debug("URLString=" + urlString);
-		
-		new RegisterThread(plugin, player, email, password, urlString);
+		new RegisterThread(plugin, player.getName(), email, password, url, encryption_key, api_key);
 		
 		return true;
 	}

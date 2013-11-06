@@ -31,6 +31,9 @@
 
 package me.lucasemanuel.register;
 
+import java.util.HashMap;
+
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -39,25 +42,47 @@ public class RegisterThread extends Thread {
 	
 	private final Main   plugin;
 	
-	private final String urlString;
-	private final Player player;
+	private final String url;
+	private final String encryption_key;
+	private final String api_key;
+	
+	private final String playername;
 	private final String email;
 	private final String password;
 	
-	public RegisterThread(Main p_instance, final Player player, final String email, final String password, final String urlString) {
-		this.urlString = urlString;
-		this.player = player;
-		this.email = email;
-		this.password = password;
+	public RegisterThread(
+			Main p_instance, 
+			final String playername, 
+			final String email, 
+			final String password, 
+			final String url, 
+			final String encryption_key, 
+			final String api_key) {
+	
+		this.url            = url;
+		this.encryption_key = encryption_key;
+		this.api_key        = api_key;
 		
-		this.plugin = p_instance;
+		this.playername     = playername;
+		this.email          = email;
+		this.password       = password;
+		
+		this.plugin         = p_instance;
 		
 		start();
 	}
 	
 	public void run() {
 		
-		final String answer = Utils.sendPHPGET(urlString);
+		@SuppressWarnings("serial")
+		HashMap<String, String> data = new HashMap<String, String>() {{
+			put("key",      Utils.encrypt(api_key,    encryption_key));
+			put("username", Utils.encrypt(playername, encryption_key));
+			put("email",    Utils.encrypt(email,      encryption_key));
+			put("pass",     Utils.encrypt(password,   encryption_key));
+		}};
+		
+		final String answer = Utils.sendPHPPost(url, data);
 		
 		if (answer != null) {
 			
@@ -65,6 +90,11 @@ public class RegisterThread extends Thread {
 			new BukkitRunnable() {
 				@Override
 				public void run() {
+					
+					Player player = Bukkit.getPlayerExact(playername);
+					
+					if(player == null || !player.isOnline()) return;
+					
 					switch (answer) {
 						case "0":
 							player.sendMessage(ChatColor.GREEN + "Grattis " + player.getName() + "! Du har registrerats som medlem på Spelplanetens forum.");
@@ -91,7 +121,7 @@ public class RegisterThread extends Thread {
 			}.runTask(plugin);
 		}
 		else {
-			player.sendMessage(ChatColor.RED + "Oops! Något gick visst fel! Kontakta admin/mod.");
+			System.out.println("SEVERE! Register failed to register user! Answer == null! Playername=" + playername);
 		}
 	}
 }

@@ -31,10 +31,15 @@
 package me.lucasemanuel.register;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLEncoder;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -61,8 +66,13 @@ public class Utils {
 		Utils.logger = new ConsoleLogger("Utils");
 	}
 	
+	/**
+	 * Send data to a webserver using _GET.
+	 * 
+	 * @param urlString - The url with the variables.
+	 * @return - The answer from the webserver, null if failed.
+	 */
 	public static String sendPHPGET(String urlString) {
-		
 		String answer = null;
 		
 		try {
@@ -81,6 +91,65 @@ public class Utils {
 		catch (IOException e) {
 			logger.severe(e.getMessage());
 			return null;
+		}
+		
+		return answer;
+	}
+	
+	/**
+	 * Send data to a webserver using _POST.
+	 * 
+	 * @param urlString - Url to the server.
+	 * @param data - A map with the data to send.
+	 * @return - Answer from the webserver, null if failed.
+	 */
+	public static String sendPHPPost(String urlString, Map<String, String> data) {
+		String answer = null;
+		
+		try {
+			URL url = new URL(urlString);
+			HttpURLConnection con = (HttpURLConnection) url.openConnection();
+			
+			con.setDoInput(true);
+			con.setDoOutput(true);
+			con.setUseCaches(false);
+			con.setRequestMethod("POST");
+			con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+			
+			// Send data
+			DataOutputStream dataOut = new DataOutputStream(con.getOutputStream());
+			
+			StringBuilder param = new StringBuilder();
+			
+			boolean first = true;
+			for(Entry<String, String> e : data.entrySet()) {
+				if(first) {
+					param.append(e.getKey());
+					first = false;
+				}
+				else {
+					param.append('&');
+					param.append(e.getKey());
+				}
+				param.append('=');
+				param.append(URLEncoder.encode(e.getValue(), "UTF-8"));
+			}
+			
+			logger.debug(param.toString());
+			
+			dataOut.writeBytes(param.toString());
+			dataOut.flush();
+			dataOut.close();
+			
+			// Receive data
+			BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+			answer = in.readLine();
+			
+			in.close();
+		}
+		catch (IOException e) {
+			logger.severe(e.toString());
+			e.printStackTrace();
 		}
 		
 		return answer;
@@ -116,7 +185,6 @@ public class Utils {
 	 * @param password
 	 * @return true giltigt lösenord, false ogiltigt lösenord
 	 */
-	
 	public static boolean passwordValidator(final String password) {
 		final Pattern pattern;
 		final Matcher matcher;
@@ -178,7 +246,7 @@ public class Utils {
 		return rm.getApplicableRegions(com.sk89q.worldguard.bukkit.BukkitUtil.toVector(loc));
 	}
 	
-	public static WorldGuardPlugin getWorldGuard() {
+	private static WorldGuardPlugin getWorldGuard() {
 		Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("WorldGuard");
 		
 		// WorldGuard may not be loaded
