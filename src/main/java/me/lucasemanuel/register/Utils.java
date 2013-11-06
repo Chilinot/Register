@@ -135,8 +135,6 @@ public class Utils {
 				param.append(URLEncoder.encode(e.getValue(), "UTF-8"));
 			}
 			
-			logger.debug(param.toString());
-			
 			dataOut.writeBytes(param.toString());
 			dataOut.flush();
 			dataOut.close();
