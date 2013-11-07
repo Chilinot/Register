@@ -136,22 +136,22 @@ public class Commands implements CommandExecutor {
 		final String playername = args[0];
 		final int    rank       = this.idlist.get(args[1]);
 		
-		final String url = this.plugin.getConfig().getString("scripts.promote");
-		
+		final String url            = this.plugin.getConfig().getString("scripts.promote");
+		final String api_key        = this.plugin.getConfig().getString("APIkeys.promote");
 		final String encryption_key = this.plugin.getConfig().getString("encryption.key");
-		
-		@SuppressWarnings("serial")
-		final HashMap<String, String> data = new HashMap<String, String>() {{
-			put("key" ,     Utils.encrypt(plugin.getConfig().getString("APIkeys.promote"), encryption_key));
-			put("username", Utils.encrypt(playername, encryption_key));
-			put("rank",     Utils.encrypt(String.valueOf(rank), encryption_key));
-		}};
 		
 		new BukkitRunnable() {
 			@Override
 			public void run() {
 				
 				// Runs a-sync to the server.
+				@SuppressWarnings("serial")
+				final HashMap<String, String> data = new HashMap<String, String>() {{
+					put("key" ,     Utils.encrypt(api_key,              encryption_key));
+					put("username", Utils.encrypt(playername,           encryption_key));
+					put("rank",     Utils.encrypt(String.valueOf(rank), encryption_key));
+				}};
+				
 				final String answer = Utils.sendWebPost(url, data);
 				
 				// Runs sync to the server.
