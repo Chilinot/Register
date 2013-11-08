@@ -43,18 +43,18 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class Commands implements CommandExecutor {
 	
-	private ConsoleLogger	logger;
-	private Main			plugin;
+	private ConsoleLogger logger;
+	private Main          plugin;
 	
 	@SuppressWarnings("serial")
-	private final HashMap<String, Integer>	idlist	= new HashMap<String, Integer>() {{
-			put("bannad", 7);
-			put("medlem", 49);
-			put("vipa", 43);
-			put("vipb", 44);
-			put("vipc", 45);
-			put("helper", 46);
-			put("byggare", 47);
+	private final HashMap<String, String> idlist = new HashMap<String, String>() {{
+			put("bannad",  "7");
+			put("medlem",  "49");
+			put("vipa",    "43");
+			put("vipb",    "44");
+			put("vipc",    "45");
+			put("helper",  "46");
+			put("byggare", "47");
 	}};
 	
 	public Commands(Main instance) {
@@ -91,14 +91,13 @@ public class Commands implements CommandExecutor {
 			sender.sendMessage(ChatColor.RED + "Du måste befinna dig vid regelskyltarna för att kunna använda detta kommando!");
 			return true;
 		}
-		
 		if (args.length != 2) {
 			player.sendMessage(ChatColor.RED + "Du måste skriva både email och lösenord!");
 			return false;
 		}
 		
-		String name = player.getName();
-		String email = args[0];
+		String name     = player.getName();
+		String email    = args[0];
 		String password = args[1];
 		
 		if(!Utils.emailValidator(email)) {
@@ -133,8 +132,8 @@ public class Commands implements CommandExecutor {
 			return true;
 		}
 		
-		final String playername = args[0];
-		final int    rank       = this.idlist.get(args[1]);
+		final String playername     = args[0];
+		final String rank           = this.idlist.get(args[1]);
 		
 		final String url            = this.plugin.getConfig().getString("scripts.promote");
 		final String api_key        = this.plugin.getConfig().getString("APIkeys.promote");
@@ -147,9 +146,9 @@ public class Commands implements CommandExecutor {
 				// Runs a-sync to the server.
 				@SuppressWarnings("serial")
 				final HashMap<String, String> data = new HashMap<String, String>() {{
-					put("key" ,     Utils.encrypt(api_key,              encryption_key));
-					put("username", Utils.encrypt(playername,           encryption_key));
-					put("rank",     Utils.encrypt(String.valueOf(rank), encryption_key));
+					put("key" ,     Utils.encrypt(api_key,    encryption_key));
+					put("username", Utils.encrypt(playername, encryption_key));
+					put("rank",     Utils.encrypt(rank,       encryption_key));
 				}};
 				
 				final String answer = Utils.sendWebPost(url, data);
