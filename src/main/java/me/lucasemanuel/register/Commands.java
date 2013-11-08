@@ -33,15 +33,14 @@ package me.lucasemanuel.register;
 
 import java.util.HashMap;
 
+import me.lucasemanuel.register.threads.PromoteDemoteThread;
 import me.lucasemanuel.register.threads.RegisterThread;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 
 public class Commands implements CommandExecutor {
 	
@@ -141,66 +140,7 @@ public class Commands implements CommandExecutor {
 		final String api_key        = this.plugin.getConfig().getString("APIkeys.promote");
 		final String encryption_key = this.plugin.getConfig().getString("encryption.key");
 		
-		new BukkitRunnable() {
-			@Override
-			public void run() {
-				
-				// Runs a-sync to the server.
-				@SuppressWarnings("serial")
-				final HashMap<String, String> data = new HashMap<String, String>() {{
-					put("key" ,     Utils.encrypt(api_key,    encryption_key));
-					put("username", Utils.encrypt(playername, encryption_key));
-					put("rank",     Utils.encrypt(rank,       encryption_key));
-				}};
-				
-				final String answer = Utils.sendWebPost(url, data);
-				
-				// Runs sync to the server.
-				new BukkitRunnable() {
-					@Override
-					public void run() {
-						if (answer != null) {
-							switch (answer.charAt(answer.length() - 1)) {
-							
-								case '0':
-									sender.sendMessage(ChatColor.GREEN + "Rankändring lyckad!");
-									
-									Player player = Bukkit.getPlayerExact(playername);
-									if (player != null && player.isOnline())
-										player.chat("/sync");
-									else
-										sender.sendMessage(ChatColor.GREEN + "Spelaren verkar inte vara online! Säg åt denna att använda /sync nästa gång denne logger in!");
-									
-									break;
-								
-								case '1':
-									sender.sendMessage(ChatColor.RED + "Rankändringen kunde inte genomföras!");
-									break;
-								
-								case '2':
-									sender.sendMessage(ChatColor.RED + playername + " är redan " + args[1] + " ingen ändring gjordes.");
-									break;
-								
-								case '3':
-									sender.sendMessage(ChatColor.RED + playername + " är en moderator. Du kan inte promota/demota en sådan medlem");
-									break;
-								
-								case '4':
-									sender.sendMessage(ChatColor.RED + playername + " finns inte!");
-									break;
-								
-								default:
-									sender.sendMessage(ChatColor.RED + "Felaktigt svar från hemsidan!");
-									break;
-							}
-						}
-						else {
-							sender.sendMessage(ChatColor.RED + "Verkar inte ha fått något svar från hemsidan! Kolla loggen och försök igen.");
-						}
-					}
-				}.runTask(plugin);
-			}
-		}.runTaskAsynchronously(plugin);
+		new PromoteDemoteThread(plugin, sender, playername, rank, url, api_key, encryption_key);
 		
 		return true;
 	}
