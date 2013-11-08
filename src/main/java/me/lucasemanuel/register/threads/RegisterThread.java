@@ -29,9 +29,12 @@
  * 
  */
 
-package me.lucasemanuel.register;
+package me.lucasemanuel.register.threads;
 
 import java.util.HashMap;
+
+import me.lucasemanuel.register.Main;
+import me.lucasemanuel.register.Utils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

@@ -33,6 +33,8 @@ package me.lucasemanuel.register;
 
 import java.util.HashMap;
 
+import me.lucasemanuel.register.threads.RegisterThread;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
