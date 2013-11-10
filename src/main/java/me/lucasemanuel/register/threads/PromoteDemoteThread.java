@@ -118,6 +118,7 @@ public class PromoteDemoteThread extends Thread {
 						
 						default:
 							sender.sendMessage(ChatColor.RED + "Felaktigt svar från hemsidan!");
+							System.out.println("REGISTER ERROR! Incorrect answer from promotedemote script! Answer=" + answer);
 							break;
 					}
 				}
