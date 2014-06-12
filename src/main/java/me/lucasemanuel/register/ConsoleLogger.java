@@ -1,11 +1,9 @@
 /**
- *  Name: ConsoleLogger.java
- *  Updated: 2013-06-10 - 14:44
- *
- *  Author: LucasEmanuel @ bukkit forums
+ *  Author:  Lucas Arnström - LucasEmanuel @ Bukkit forums
+ *  Contact: lucasarnstrom(at)gmail(dot)com
  *
  *
- *  Copyright 2013 Lucas Arnstr�m
+ *  Copyright 2014 Lucas Arnström
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,9 +19,9 @@
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  *
+ *
  *  Filedescription:
  *
- *  Takes care of all the logging to the console.
  *
  */
 package me.lucasemanuel.register;

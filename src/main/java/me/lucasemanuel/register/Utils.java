@@ -1,12 +1,9 @@
 /**
- *  Name:    Utils.java
- *  Created: 13:21:14 - 6 nov 2013
- *
- *  Author:  Lucas Arnstr�m - LucasEmanuel @ Bukkit forums
+ *  Author:  Lucas Arnström - LucasEmanuel @ Bukkit forums
  *  Contact: lucasarnstrom(at)gmail(dot)com
  *
  *
- *  Copyright 2013 Lucas Arnstr�m
+ *  Copyright 2014 Lucas Arnström
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
