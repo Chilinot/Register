@@ -1,52 +1,53 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>me.lucasemanuel</groupId>
-  <artifactId>register</artifactId>
-  <version>2.4</version>
-  <name>Register</name>
-  <description>Used to register players.</description>
-  
-  <!-- Repositories -->
-  <repositories>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>me.lucasemanuel</groupId>
+    <artifactId>register</artifactId>
+    <version>2.4</version>
+    <name>Register</name>
+    <description>Used to register players.</description>
+
+    <!-- Repositories -->
+    <repositories>
         <repository>
             <id>bukkit-repo</id>
             <url>http://repo.bukkit.org/content/groups/public</url>
         </repository>
-   </repositories>
-   
-   <!-- Dependencies -->
-  <dependencies>
-	   <!-- Bukkit -->
-	   <dependency>
+    </repositories>
+
+    <!-- Dependencies -->
+    <dependencies>
+        <!-- Bukkit -->
+        <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
             <version>1.6.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
-	   <dependency>
-		  <groupId>org.bukkit</groupId>
-		  <artifactId>craftbukkit</artifactId>
-		  <version>1.6.2-R0.1-SNAPSHOT</version>
-		  <scope>provided</scope>
-	   </dependency>
-	   <!-- WorldGuard -->
-	   <dependency>
-	   	<groupId>com.sk89q</groupId>
-	   	<artifactId>worldguard</artifactId>
-	   	<version>5.8.1-SNAPSHOT</version>
-	   	<scope>provided</scope>
-	   </dependency>
-	   <dependency>
-	   	<groupId>commons-codec</groupId>
-	   	<artifactId>commons-codec</artifactId>
-	   	<version>1.2</version>
-	   </dependency>
-  </dependencies>
-  
-  <build>
+        <dependency>
+            <groupId>org.bukkit</groupId>
+            <artifactId>craftbukkit</artifactId>
+            <version>1.6.2-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- WorldGuard -->
+        <dependency>
+            <groupId>com.sk89q</groupId>
+            <artifactId>worldguard</artifactId>
+            <version>[5.8.1-SNAPSHOT,)</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.2</version>
+        </dependency>
+    </dependencies>
+
+    <build>
         <finalName>${project.name}</finalName>
         <defaultGoal>clean package</defaultGoal>
- 
+
         <!-- Resources -->
         <resources>
             <resource>
@@ -59,7 +60,7 @@
                 </includes>
             </resource>
         </resources>
- 
+
         <!-- Plugins -->
         <plugins>
             <!-- Compiler -->
@@ -73,32 +74,32 @@
                     <showDeprecation>true</showDeprecation>
                 </configuration>
             </plugin>
-            
+
             <!-- Shader -->
             <plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-shade-plugin</artifactId>
-				<version>1.6</version>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>shade</goal>
-						</goals>
-						<configuration>
-							<minimizeJar>true</minimizeJar>
-							<filters>
-							</filters>
-							<relocations>
-								<relocation>
-									<pattern>org.apache.commons.codec</pattern>
-									<shadedPattern>me.lucasemanuel.register.apache.commons.codec</shadedPattern>
-								</relocation>
-							</relocations>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>1.6</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <minimizeJar>true</minimizeJar>
+                            <filters>
+                            </filters>
+                            <relocations>
+                                <relocation>
+                                    <pattern>org.apache.commons.codec</pattern>
+                                    <shadedPattern>me.lucasemanuel.register.apache.commons.codec</shadedPattern>
+                                </relocation>
+                            </relocations>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 </project>
